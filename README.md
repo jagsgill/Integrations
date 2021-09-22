@@ -6,6 +6,7 @@ This repository is for Integration examples using the Layer7 API Gateway. You wi
 |Name|Brief Description|
 |-----|-----------------|
 |sample|This is a sample of how each example should be structured in the repository and should be used as a guideline for all contributions|
+|[Gateway with Luna HSM](./gateway-luna-helm-sample)|This is a sample helm chart of gateway container integrates with Luna HSM|
 
 
 ## Using the examples
