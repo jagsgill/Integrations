@@ -40,7 +40,7 @@ This sample includes modified gateway chart to work with Gateway container with 
 1. To Uninstall Gateway `helm uninstall my-luna-gateway`
 
 ## Additional Information
-To build Luna enabled gateway container, please follow [this document](). 
+To build Luna enabled gateway container, please follow this [document](https://github.com/Layer7-Community/Integrations/blob/main/gateway-luna-helm-sample/dockerfile/README.md). 
 
 ## Known Limitations
 The sample chart is limited to work with Rancher environment. 
