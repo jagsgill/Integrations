@@ -113,21 +113,25 @@ COPY --from=luna-min-client /tmp/patch/LunaProvider.jar /opt/SecureSpan/Gateway/
 COPY --from=luna-min-client /tmp/patch/linux/64/libLunaAPI.so /opt/SecureSpan/Gateway/runtime/lib/ext/
 
 #
-# Update security provider order as required by Luna client.
-#
-RUN echo "security.provider.1=SUN" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.2=SunJCE" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.3=SunJGSS" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.4=SunSASL" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.5=XMLDSig" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.6=SunPCSC" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.7=JdkLDAP" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.8=JdkSASL" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.9=SunPKCS11" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.10=com.safenetinc.luna.provider.LunaProvider" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.11=SunRsaSign" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.12=SunEC" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "security.provider.13=SunJSSE" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security
-  
-RUN echo "com.safenetinc.luna.provider.createExtractablePrivateKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
-    && echo "com.safenetinc.luna.provider.createExtractableSecretKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security
+# Update security provider order as required by Luna client.  This can be done either here or in the helmchart.
+# For this example, it is done in the helmchart so that the provider order can be reverted if there is a need
+# to disable Luna HSM.  Uncomment if provider order is to be set at image creation time.
+#RUN echo "security.provider.1=SUN" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.2=SunJCE" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.3=SunJGSS" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.4=SunSASL" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.5=XMLDSig" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.6=SunPCSC" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.7=JdkLDAP" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.8=JdkSASL" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.9=SunPKCS11" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.10=com.safenetinc.luna.provider.LunaProvider" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.11=SunRsaSign" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.12=SunEC" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "security.provider.13=SunJSSE" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security
+
+#  
+# Override the default Luna configuration.  Like above, for this example, it is configured in Helm. 
+# Uncomment if this configuration is to be set at image creation time. 
+#RUN echo "com.safenetinc.luna.provider.createExtractablePrivateKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
+#    && echo "com.safenetinc.luna.provider.createExtractableSecretKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security
