@@ -1,0 +1,13 @@
+namespace: layer7
+generatorOptions:
+ disableNameSuffixHash: true
+configMapGenerator:
+  - name: opa-example
+    files:
+      - bundles/opa.bundle
+secretGenerator:
+  - name: ssg-secret
+    env: secret.env
+  - name: ssg-license
+    files:
+      - "license"
