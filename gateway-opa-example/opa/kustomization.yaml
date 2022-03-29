@@ -1,0 +1,21 @@
+resources:
+  - templates/service.yaml
+  - templates/deployment.yaml
+namespace: opa
+generatorOptions:
+ disableNameSuffixHash: true
+configMapGenerator:
+  - name: api-policy
+    files:
+      - policies/layer7-rbac.rego
+      - policies/layer7-jwt.rego
+images:
+- name: opa-image
+  newName: openpolicyagent/opa:0.38.1
+patches:
+  - target:
+      kind: Job
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/serviceAccountName
+        value: default

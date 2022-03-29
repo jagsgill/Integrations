@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "5b59a33e-21c6-45bc-84a7-23b88f0c2c25",
+		"name": "Layer7 OPA Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Perform Privileged Action V1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{arnoldAuth}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "action",
+						"value": "read",
+						"type": "text"
+					}
+				],
+				"url": "{{gatewayUrl}}/v1/account/arnold"
+			},
+			"response": []
+		},
+		{
+			"name": "Perform Privileged Action V2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{arnoldAuth}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "action",
+						"value": "read",
+						"type": "text"
+					}
+				],
+				"url": "{{gatewayUrl}}/v2/account/arnold"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "gatewayUrl",
+			"value": "https://192.168.1.223:8443",
+			"type": "string"
+		},
+		{
+			"key": "ninaAuth",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ew0KICAidXNlciI6ICJuaW5hIiwNCiAgImF6cCI6ICJuaW5hIg0KfQ.S9gXLyiPn8vI6Xk8XeW-69ZfLMfkpBjhSZ9ookiQOj0",
+			"type": "string"
+		},
+		{
+			"key": "arnoldAuth",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ew0KICAidXNlciI6ICJhcm5vbGQiLA0KICAiYXpwIjogImFybm9sZCINCn0.t36fhTlnR4O0rufTVyKn-8KgpJLyK_UAx63fNCW90e4",
+			"type": "string"
+		},
+		{
+			"key": "bruceAuth",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ew0KICAidXNlciI6ICJicnVjZSIsDQogICJhenAiOiAiYnJ1Y2UiDQp9.dCXYY4nRrRQSYPzR2mLdhiwcc7FSDFossIm1bVM4Yjc",
+			"type": "string"
+		}
+	]
+}

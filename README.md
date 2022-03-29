@@ -7,7 +7,7 @@ This repository is for Integration examples using the Layer7 API Gateway. You wi
 |-----|-----------------|
 |sample|This is a sample of how each example should be structured in the repository and should be used as a guideline for all contributions|
 |[Gateway with Luna HSM](./gateway-luna-helm-sample)|This is a sample helm chart of gateway container integrates with Luna HSM|
-
+|[Gateway OPA Example](./gateway-opa-example)|This example contains a very simple implementation of the Layer7 API Gateway calling out to OPA ([Open Policy Agent](https://www.openpolicyagent.org/docs/latest/)) for AuthN/Z decisions.|
 
 ## Using the examples
 
