@@ -54,8 +54,8 @@ You can also log in to the Gateway via Policy Manager to see how the Policies ar
 #### V1 and V2 examples
 - In V1 the Gateway validates the JWT upfront
 
-![v1 Flow](/postman/OPAv1Flow)
+![v1 Flow](./postman/OPAv1Flow.png)
 
 - In V2 the JWT is validated by OPA
 
-![v2 Flow](/postman/OPAv2Flow)
+![v2 Flow](./postman/OPAv2Flow.png)
