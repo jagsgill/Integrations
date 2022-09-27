@@ -1,0 +1,25 @@
+database:
+  enabled: false
+  create: false
+
+existingGatewaySecretName: ssg-secret
+
+license:
+  value:
+  accept: true
+  existingSecretName: ssg-license
+
+existingBundle:
+  enabled: true
+  configMaps: 
+  - name: echo
+  - name: offbox-test-services
+
+serviceMetrics:
+  enabled: true
+
+influxdb:
+  enabled: true
+
+grafana:
+  enabled: true
