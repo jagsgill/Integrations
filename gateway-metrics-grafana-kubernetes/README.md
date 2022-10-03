@@ -1,8 +1,8 @@
 # About
-This repository contains example configuration to send service metrics data from an ephemeral container gateway running on Kubernetes to [InfluxDB](https://www.influxdata.com) and visualize metrics dashboard in [Grafana](https://grafana.com).
+This repository is a sample configuration to send service metrics data from an ephemeral container gateway (running on Kubernetes) to [InfluxDB](https://www.influxdata.com), and visualize the metrics in a [Grafana](https://grafana.com) dashboard.
 
 # Getting Started
-Before getting started, you must copy CA API Gateway license file to `./gateway/license`.
+Before getting started, you must copy an API Gateway license file to the `./gateway/license` directory.
 
 This example has been tested using the following versions of Kubernetes:
 * Kubernetes 1.22 on GKE
@@ -19,8 +19,8 @@ You can then deploy an ephemeral gateway by running the command
 `make install`
 
 * First, a dedicated namespace "layer7" is created
-* The Kubernetes cluster is the customized using the kustomization.yaml file, with the addition of the "echo" and "offbox-test-services" bundles. Configmaps corresponding to the bundles are created. They are "mounted" into the ephemeral gateway at startup (see section "bundles" in the [value.yml](https://github.com/CAAPIM/apim-charts/blob/stable/charts/gateway/values.yaml) file). The "echo" bundle corresponds to an "echo" service whilst the "offbox-test-services" includes 4 test services.
-* Finally, the ephemeral gateway is started, with custom values specified in [myvalue.yml](./helm/myvalues.yaml) so that an ephemeral gateway is started. The bundles are loaded from the configmaps. Service metrics as well as InfluxDb to collect the metrics and Grafana to visualize them are all enabled.
+* The Kubernetes cluster is customized using the kustomization.yaml file, with the addition of the "echo" and "offbox-test-services" bundles. Configmaps corresponding to the bundles are created. They are "mounted" into the ephemeral gateway at startup (see section "bundles" in the [value.yml](https://github.com/CAAPIM/apim-charts/blob/stable/charts/gateway/values.yaml) file). The "echo" bundle corresponds to an "echo" service whilst the "offbox-test-services" includes 4 test services.
+* Finally, the ephemeral gateway is started, with custom values specified in [myvalue.yml](./helm/myvalues.yaml). The bundles are loaded from the configmaps. Service metrics as well as InfluxDb to collect the metrics and Grafana to visualize them are all enabled.
 
 Once started, the following services are available from your Kubernetes cluster:
 
@@ -33,7 +33,7 @@ Once started, the following services are available from your Kubernetes cluster:
 
 ![Kubernetes services](./img/services.png)
 
-When connecting to the gateway with a Policy Manager, one can observe that there are 4 test services created in the "Test" repository. Test service 1 is simple routing to the "echo" service. The other three test services are generating different errors that are visualized with Grafana.
+When connecting to the gateway with a Policy Manager, one can observe that there are 4 test services created in the "Test" repository. Test1 is routing to the "echo" service. The other three test services are generating different errors that are visualized with Grafana.
 
 ![Test services](./img/testServices.png)
 
@@ -54,7 +54,7 @@ This script will randomly send request to the following services on the Gateway.
 | test1 [/test1] | This service successfully sends request to the downstream "echo" service. |
 | test2 [/test2] | This service fails with policy violation. |
 | test3 [/test3] | This service fails with routing failure. |
-| test4 [/test4] | This service runs successfully. This service does not send request to downstream service. |
+| test4 [/test4] | This service runs successfully but does not send request to a downstream service. |
 
 ## Viewing Gateway service metrics dashboard
 Go back to the Grafana - Home page in the web browser. Click on the dashboard dropdown button next to the 'Home' label near the top of the page. Click on the *Gateway Service Metrics* link to view the service metrics dashboard.
@@ -73,10 +73,11 @@ Run the following command:
 `make uninstall`
 
 # Enabling Off-Boxing on an existing gateway
-To enable the metrics off-boxing on a target gateway, you can load the bundle avaible ![here](./gateway/bundles/offbox-test-services.bundle), making a REST call to the target gateway: 
+To enable the metrics off-boxing on a target gateway, you can load the bundle avaible ![here](./gateway/bundles/influxdb.bundle), making a REST call to the target gateway: 
 `curl -kv -u <login:password> -H "Content-Type: application/xml" -X PUT https://<target_gateway>:8443/restman/1.0/bundle -d@"./gateway/bundles/influxdb.bundle"`
 
 Once loaded, the service is available as shown below:
+
 ![Off-box service](./img/offbox.png)
 
 See also the ![documentation](https://techdocs.broadcom.com/us/en/ca-enterprise-software/layer7-api-management/api-gateway/10-1/learning-center/overview-of-the-policy-manager/gateway-dashboard/configure-gateway-for-external-service-metrics.html) to finalize the configuration.
