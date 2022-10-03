@@ -8,6 +8,8 @@ This repository is for Integration examples using the Layer7 API Gateway. You wi
 |sample|This is a sample of how each example should be structured in the repository and should be used as a guideline for all contributions|
 |[Gateway with Luna HSM](./gateway-luna-helm-sample)|This is a sample helm chart of gateway container integrates with Luna HSM|
 |[Gateway OPA Example](./gateway-opa-example)|This example contains a very simple implementation of the Layer7 API Gateway calling out to OPA ([Open Policy Agent](https://www.openpolicyagent.org/docs/latest/)) for AuthN/Z decisions.|
+|[Gateway Metrics](./gateway-metrics-grafana-example)|This example is an all-in-one / docker based container 9.4 gateway that includes the required Off-Box Metrics policy as well as four test policies and a script to make calls and generate traffic.|
+|[Gateway Metrics Kubernetes](./gateway-metrics-grafana-kubernetes)|This example is similar to the Gateway Metrics sample but leverages the [Gateway Helm Charts](https://github.com/CAAPIM/apim-charts/tree/stable/charts/gateway) to start an ephemeral gateway with metrics off-boxing. The needed off-box policy is also provided as a bundle so that it can be added to an existing gateway.|
 
 ## Using the examples
 

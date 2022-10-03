@@ -1,0 +1,16 @@
+namespace: layer7
+generatorOptions:
+ disableNameSuffixHash: true
+configMapGenerator:
+  - name: echo
+    files:
+      - bundles/echo.bundle
+  - name: offbox-test-services
+    files:
+      - bundles/offbox-test-services.bundle     
+secretGenerator:
+  - name: ssg-secret
+    env: secret.env
+  - name: ssg-license
+    files:
+      - "license"
