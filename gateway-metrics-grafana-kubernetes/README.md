@@ -4,16 +4,11 @@ This repository is a sample configuration to send service metrics data from an e
 # Getting Started
 Before getting started, you must copy an API Gateway license file to the `./gateway/license` directory.
 
-This example has been tested using the following versions of Kubernetes:
-* Kubernetes 1.22 on GKE
+This example has been tested using Kubernetes 1.22. 
 
 ## Setup
-You need to have a Kubernetes cluster up and running (4 cores and 16 GB RAM), as well as Gcloud, Kubectl and Helm deployed to your workstation. Make should also be installed on your workstation.
-Once the cluster is up and running, use the connection string provided by GKE so that you can connect from your workstation. For exemple, on a terminal of your workstation, it would be something like:
-`gcloud container clusters get-credentials <cluster-name> --zone <cluster zone> --project <project>`
-
-Also ensure that you have the necessary admin right on GKE:
-`kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user <your GKE credentials>`
+You need to have a Kubernetes cluster up and running (4 cores and 16 GB RAM), as well as Kubectl and Helm deployed to your workstation. Make should also be installed on your workstation.
+Once the cluster is up and running, ensure you can connect to it from your workstation and have the proper rights (cluster role binding to a cluster admin role may be required).
 
 You can then deploy an ephemeral gateway by running the command 
 `make install`
