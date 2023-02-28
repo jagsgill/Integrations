@@ -81,7 +81,7 @@ database:
   enabled: true
   # A MySQL Database is configured with this Chart, set to false and set jdbcURL to use your own DB server
   # Do not use this demo database in production!!!
-  create: true
+  create: false
   # jdbcURL: jdbc:mysql://<host>:<port>/<database> | jdbc:mysql://<host>:<port>,<host>:<port>/<database>,...
   # Configurable, update the mysql.auth.<settings> if you change this and would like to use the demo database server.
   username: gateway
@@ -107,7 +107,7 @@ tls:
 # most cloud vendors provide metrics server by default
 # https://github.com/kubernetes-sigs/metrics-server
 autoscaling:
-  enabled: false
+  enabled: true
   hpa:
     minReplicas: 1
     maxReplicas: 3
@@ -136,12 +136,12 @@ resources:
   # There are no resource limits set by default, this is a consicious choice for the user and
   # increases the chance of these running on environments with fewer resources available
   # Remove the curly braces and uncomment cpu/memory to set.
-  limits: {}
-  #   cpu: 2000m
-  #   memory: 4Gi
-  requests: {}
-  #   cpu: 2000m
-  #   memory: 4Gi
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+  requests:
+    cpu: 2000m
+    memory: 4Gi
 
 config:
   # Heap Size should be a percentage of the memory configured in resource limits
@@ -165,7 +165,7 @@ config:
       com.l7tech.server.log.ConsoleMessageSink$L7ConsoleHandler.formatter = com.l7tech.util.JsonLogFormatter
       com.l7tech.server.log.ConsoleMessageSink$L7ConsoleHandler.level = CONFIG
   cwp:
-    enabled: false
+    enabled: true
     properties:
       - name: io.httpsHostAllowWildcard
         value: true
@@ -197,7 +197,7 @@ config:
  # If enabled this will override the default listen ports and their configuration in the API Gateway
   listenPorts:
     custom:
-      enabled: false
+      enabled: true
     ports:
       - name: Default HTTPS (8443)
         port: 8443
@@ -216,8 +216,8 @@ config:
         # privateKey: 00000000000000000000000000000002:ssl
           clientAuthentication: Optional
           versions:
-        # - TLSv1.0
-        # - TLSv1.1
+          # - TLSv1.0
+          # - TLSv1.1
           - TLSv1.2
           - TLSv1.3
           useCipherSuitesOrder: true
@@ -277,8 +277,8 @@ config:
         # privateKey: 00000000000000000000000000000002:ssl
           clientAuthentication: Optional
           versions:
-        # - TLSv1.0
-        # - TLSv1.1
+          # - TLSv1.0
+          # - TLSv1.1
           - TLSv1.2
           - TLSv1.3
           useCipherSuitesOrder: true
@@ -389,7 +389,7 @@ management:
 
 service:
   # Service Type, ClusterIP, NodePort, LoadBalancer
-  type: LoadBalancer
+  type: ClusterIP
   ## Load Balancer sources
   ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
   # loadBalancerSourceRanges:
@@ -423,8 +423,8 @@ service:
 
 # This enables/disables otk install or upgrade.
 # Prerequisites.
-#  1. OTK DB is installed.
-#  2. restman is enabled. Can be disabled once the install/upgrage is complete (management.restman.enabled: true)
+#  1. OTK DB is installed. 
+#  2. restman is enabled. Can be disabled once the install/upgrage is complete (management.restman.enabled: true) 
 otk:
   enabled: false
   # OTK installation type - SINGLE, DMZ or INTERNAL
@@ -438,11 +438,11 @@ otk:
   # skipPostInstallationTasks: false
 
   # Specify internal gateway host and port for DMZ OTK type
-  # internalGatewayHost:
+  # internalGatewayHost: 
   # internalGatewayPort:
 
   # Specify DMZ gateway host and port for interal OTK type
-  # dmzGatewayHost:
+  # dmzGatewayHost: 
   # dmzGatewayPort:
 
   # List of comma seperated sub soluction Kits to install or upgrade.
@@ -458,12 +458,11 @@ otk:
   database:
     # OTK database type - mysql/oracle/cassandra
     type: mysql
-     # connectionName: OAuth
-    # existingSecretName: otkDbSecret
+    connectionName: OAuth
+    #existingSecretName: otkdb-secret
     username: root
     password: 7layer
-    # properties: {"maximumPoolSize":15, "minimumPoolSize":3}
-    # For Cassandra driverConfig is supported from GW 11.0. Either otk.database.cassandra.driverConfig or otk.database.properties should be provided
+    properties: {"maximumPoolSize":15, "minimumPoolSize":3}
     # properties: {"localDataCenterName" : "DC1"}
     sql:
       jdbcURL: mysql://localhost:3306/otk_db
@@ -474,11 +473,9 @@ otk:
     #   connectionPoints: localhost
     #   port:
     #   keyspace:
-    # For Cassandra driverConfig is supported from GW 11.0. Either otk.database.cassandra.driverConfig or otk.database.properties should be provided
     #   driverConfig: {"localDataCenterName" : "DC1"}
 
   # OTK Specific configuration:
-  # - The liveliness probe is not supported for OTK 4.6 & below versions
   # - otk.livenessProbe.type as httpGet
   # - otk.livenessProbe.path /auth/oauth/health
   # - otk.livenessProbe.port 8443
@@ -491,7 +488,6 @@ otk:
       path:
       port:
   # OTK Specific configuration:
-  # - The readinessProbe probe is not supported for OTK 4.6 & below versions
   # - otk.readinessProbe.type as httpGet
   # - otk.readinessProbe.path /auth/oauth/health
   # - otk.readinessProbe.port 8443
@@ -504,12 +500,13 @@ otk:
       path:
       port:
 
+
 # This project does not currently support Google's GCE controller.
 # The default way to expose the Gateway is via L4 Load Balancer because it goes far beyond the HTTP(S) limitation ingress currently imposes
 # Certificates are not created here, please specify an existing cert secret to use if enabling TLS
 ingress:
   # Set to true to create ingress object
-  enabled: false
+  enabled: true
   # Ingress Class Name
   ingressClassName: nginx
   # Ingress annotations
@@ -522,20 +519,20 @@ ingress:
   # By default clusterHostname is used, only set this if you want to use a different host
    ## Enable TLS configuration for the hostname defined at ingress.hostname/clusterHostname parameter
   tls:
-  - hosts:
+  - hosts: 
     - dev.ca.com
     secretName: default
   # - hosts:
   #   - dev1.ca.com
   #   secretName: default
-
+  
   rules:
-  - host: dev.ca.com
-    path: "/"
-    service:
-      port:
-        name: https
-      # number:
+   - host: dev.ca.com
+     path: "/"
+     service:
+       port:
+         name: https
+        # number:
   #  - host: dev1.ca.com
   #    path: "/"
   #    service:
@@ -577,7 +574,7 @@ existingBundle:
   #       secretProviderClass: "secret-provider-class-name"
  # - name: mysecretbundle2
 
-# This is limited to a single configmap or secret. ConfigMaps and Secrets can hold multiple scripts.
+ # This is limited to a single configmap or secret. ConfigMaps and Secrets can hold multiple scripts.
 # See an example here - https://github.com/Layer7-Community/Utilities/tree/main/gateway-init-container-examples
 # NOTE: if you set a configMap and a Secret only one of them will be applied to your API Gateway.
 existingHealthCheck:
@@ -594,7 +591,7 @@ existingHealthCheck:
     #   volumeAttributes:
     #     secretProviderClass: "vault-database"
 
-# Certain folders on the Container Gateway are not writeable by design.
+    # Certain folders on the Container Gateway are not writeable by design.
 # This configuration allows you to mount configMap/Secret keys to specific paths on the Gateway without
 # the need for a root user or a custom/derived image.
 customConfig:
