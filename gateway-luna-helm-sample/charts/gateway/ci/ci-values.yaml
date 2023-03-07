@@ -1,5 +1,0 @@
-license:
-  value: SSG_LICENSE
-  accept: true
-ingress:
-  enabled: true
