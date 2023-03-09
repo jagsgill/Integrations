@@ -72,9 +72,9 @@ RUN ./bin/64/vtl createCert -n ${CERT_NAME}
 RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret scp -oStrictHostKeyChecking=no config/certs/${CERT_NAME}.pem ${HSM_USER}@${HSM_SERVER}:
 
 # Register client
-# RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret ssh ${HSM_USER}@${HSM_SERVER} "client register -client ${CERT_NAME} -hostname ${CERT_NAME}"
+RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret ssh ${HSM_USER}@${HSM_SERVER} "client register -client ${CERT_NAME} -hostname ${CERT_NAME}"
 # Assign client to partition
-# RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret ssh ${HSM_USER}@${HSM_SERVER} "client assignpartition -client ${CERT_NAME} -partition ${PARTITION_NAME}"
+RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret ssh ${HSM_USER}@${HSM_SERVER} "client assignpartition -client ${CERT_NAME} -partition ${PARTITION_NAME}"
 # Disable ip check
 RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret ssh ${HSM_USER}@${HSM_SERVER} "ntls ipcheck disable"
   
