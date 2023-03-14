@@ -6,6 +6,8 @@
 
 # For the Tomcat 9.0.x Upgrade feature
 authconfigprovider.factory=org.apache.catalina.authenticator.jaspic.AuthConfigFactoryImpl
+
+# Add the LunaProvider to the list of Java security providers
 security.provider.1=SUN
 security.provider.2=SunJCE
 security.provider.3=SunJGSS
@@ -20,5 +22,6 @@ security.provider.11=SunRsaSign
 security.provider.12=SunEC
 security.provider.13=SunJSSE
 
+# Properties required for using the default Luna partition policies supported by the Gateway
 com.safenetinc.luna.provider.createExtractablePrivateKeys=true
 com.safenetinc.luna.provider.createExtractableSecretKeys=true
