@@ -1,4 +1,4 @@
-# Dockerfile for Gateway with Luna HSM Integration 
+# Dockerfile for Gateway with Luna HSM Integration
 
 ## Description
 This sample Dockerfile builds a derived Gateway 10.1 image that can connect to Luna HSM 7.
@@ -7,7 +7,7 @@ This sample Dockerfile builds a derived Gateway 10.1 image that can connect to L
 The Dockerfile has specific steps to install the Luna Client 10.3 + Luna Client jdk11 patch.  The following files are required from Thales:
 
 - 610-000401-003_SW_Linux_Luna_Minimal_Client_V10.3.0_RevA.tar
-- 630-000522-001_Sw_Patch_jsp_fix_for_jdk11_UC10.3.0_Custom_Release.tar 
+- 630-000522-001_Sw_Patch_jsp_fix_for_jdk11_UC10.3.0_Custom_Release.tar
 
 ## Installation
 To build the image:
@@ -19,19 +19,19 @@ To build the image:
 4. Execute the following command to build the image:
 
    `DOCKER_BUILDKIT=1 docker build -t <IMAGE_NAME> --no-cache --build-arg GW_IMAGE=<GATEWAY_IMAGE> --build-arg CLIENT_TAR_FILENAME=<CLIENT_FILE> --build-arg CLIENT_PATCH_TAR_FILENAME=<PATCH_FILE> --build-arg HSM_USER=<HSM_USER> --build-arg HSM_SERVER=<HSM_SERVER> --build-arg CERT_NAME=<CERT_NAME> --build-arg PARTITION_NAME=<PARTITION_NAME> --secret id=hsm-server-secret,src=hsm-server-secret.txt -f Dockerfile .`
-   
+
    CERT_NAME is the name of the certificate that will be generated during image creation.
 
    **Note**: Re-running docker build will fail unless the client registration is commented out or the previous registration is deleted from the HSM.
 
-5. Start up the container.  At this time, the Policy Manager must be used to enable the HSM Keystore. Click on Manage Private Keys / Manage Keystore/ Enable SafeNet HSM and enter the required information.
+5. Verify the connection to HSM by running `docker run <IMAGE_NAME> /usr/local/luna/bin/64/vtl verify`
 
-6. Scale down and scale up the Gateway.  The Gateway is now using Luna HSM.
+6. Start up the container.  At this time, the Policy Manager must be used to enable the HSM Keystore. Click on Manage Private Keys / Manage Keystore/ Enable SafeNet HSM and enter the required information.
+
+7. Scale down and scale up the Gateway.  The Gateway is now using Luna HSM.
 
 ## Known Limitations
 
 * Policy Manager must be used to enable HSM on the Gateway once the Gateway has been started.
 * For the simplicity of this sample, HSM client registration is done during image creation.  The registration steps can be moved out and be performed at a later time.
 * The HSM partition is specified during image creation.  Create a new image if a new partition is to be selected.
-
-
