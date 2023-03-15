@@ -1,9 +1,3 @@
-# Gateway license file and agreement
-license:
-  value: helm-example/license.xml
-  accept: false
-
-
 # Append java.library.path and java.security.properties to enable the Gateway JVM to use Luna libraries
 config:
   javaArgs:

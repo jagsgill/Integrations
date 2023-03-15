@@ -31,12 +31,12 @@ The commands in this example are run from the `gateway-luna-helm-sample` directo
    Other methods of setting the ssg.security file such as ConfigMap and Init Containers are
    demonstrated at [Layer7-Community/Utilities gateway-init-container-examples)](https://github.com/Layer7-Community/Utilities/tree/main/gateway-init-container-examples)).
 
-1. Place your Gateway license file at `helm-example/license.xml` and if you agree, set `license.accept` to true in 
-[helm-example/luna-values.yaml](helm-example/luna-values.yaml). To run this example, you must accept the license agreement.
+1. Place your Gateway license file at `helm-example/license.xml` and if you agree, you will need to set `license.accept` to true when deploying the chart. 
+To run this example, you must accept the license agreement.
 
 1. Deploy the Gateway. 
    ```
-   helm install --repo https://caapim.github.io/apim-charts/ <DEPLOYMENT-NAME> gateway --version 3.0.5 --values helm-example/luna-values.yaml --namespace <NAMESPACE>
+   helm install --set-file "license.value=helm-example/license.xml" --set "license.accept=true" --repo https://caapim.github.io/apim-charts/ <DEPLOYMENT-NAME> gateway --version 3.0.5 --values helm-example/luna-values.yaml --namespace <NAMESPACE>
    ```
 
 1. Enable Luna via Policy Manager following Step 5, tasks 2 to 5 from [TechDocs: Configure the SafeNet Luna HSM Client v10.2](https://techdocs.broadcom.com/us/en/ca-enterprise-software/layer7-api-management/api-gateway/10-1/install-configure-upgrade/configure-the-appliance-gateway/configure-hardware-security-modules-hsm/configure-safenet-luna-sa-hsm-parent/configure-the-safenet-luna-hsm-client-v102.html).
