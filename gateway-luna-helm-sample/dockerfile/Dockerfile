@@ -64,9 +64,9 @@ RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f 
 # Register the appliance server certificate with the Client
 RUN ./bin/64/vtl addServer -c config/certs/server.pem -n ${HSM_SERVER}
 
-# Following is only needed if you need to generate client key/certificate (or you can use existing one)
+# Following is only needed if you need to generate client key/certificate.
+# Alternatively, you can use an existing ones and copy the private key/certificate to $LUNA_DIR/config/certs)
 # Create a Luna HSM Client certificate for the Docker container ($MIN_CLIENT_DIR/bin/64/vtl createCert -n <cert name>)
-# or copy private key/certificate to $LUNA_DIR/config/certs
 RUN ./bin/64/vtl createCert -n ${CERT_NAME}
 # Copy the client certificate to the SafeNet Luna Network HSM appliance
 RUN --mount=type=secret,id=hsm-server-secret,dst=/.hsm-server-secret sshpass -f /.hsm-server-secret scp -oStrictHostKeyChecking=no config/certs/${CERT_NAME}.pem ${HSM_USER}@${HSM_SERVER}:
@@ -114,7 +114,7 @@ COPY --from=luna-min-client /tmp/patch/LunaProvider.jar /opt/SecureSpan/Gateway/
 COPY --from=luna-min-client /tmp/patch/linux/64/libLunaAPI.so /opt/SecureSpan/Gateway/runtime/lib/ext/
 
 #
-# Update security provider order as required by Luna client.  This can be done either here or in the helmchart.
+# Update security provider order as required by Luna client.  This can be done either here or in the helm chart.
 # For this example, it is done in the helmchart so that the provider order can be reverted if there is a need
 # to disable Luna HSM.  Uncomment if provider order is to be set at image creation time.
 #RUN echo "security.provider.1=SUN" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
@@ -136,3 +136,6 @@ COPY --from=luna-min-client /tmp/patch/linux/64/libLunaAPI.so /opt/SecureSpan/Ga
 # Uncomment if this configuration is to be set at image creation time. 
 #RUN echo "com.safenetinc.luna.provider.createExtractablePrivateKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security \
 #    && echo "com.safenetinc.luna.provider.createExtractableSecretKeys=true" >> /opt/SecureSpan/Gateway/runtime/etc/ssg.security
+
+# Make sure to switch back to the entrypoint user at the end.
+USER ${ENTRYPOINT_UID}

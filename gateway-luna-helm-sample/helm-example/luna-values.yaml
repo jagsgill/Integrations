@@ -1,3 +1,9 @@
+# Use the derived Gateway image with the Luna client installed
+image:
+  registry: <YOUR_DOCKER_REGISTRY>
+  repository: <YOUR_DOCKER_REGISTRY>
+  tag: <TAG>
+
 # Append java.library.path and java.security.properties to enable the Gateway JVM to use Luna libraries
 config:
   javaArgs:
@@ -25,10 +31,7 @@ customConfig:
           key: ssg.security
           path: ssg.security
 
-# Enable restman to enable the Luna keystore from Policy Manager > Manage Tasks > Manage Private Keys
+# Enable Policy Manager admin access to enable the Luna keystore from Policy Manager > Manage Tasks > Manage Private Keys
 management:
-  restman:
-    enabled: true
   service:
     enabled: true
-    annotations: {}
