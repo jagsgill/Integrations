@@ -20,10 +20,11 @@ The commands in this example are run from the `gateway-luna-helm-sample` directo
 1. Follow the apim-charts/gateway [documentation](https://github.com/CAAPIM/apim-charts/blob/gateway-3.0.5/charts/gateway/README.md)
    for general configuration of the Gateway Helm chart. Instructions for installing/upgrading/uninstalling the chart are also provided there.
    User-supplied Helm chart values can be included in the [luna-values.yaml](helm-example/luna-values.yaml)
+   such as the derived Gateway image with Luna client installed.
 
 1. Set the namespace in [kustomization.yaml](helm-example/kustomization.yaml).
 
-1. Create the ssg.security secret
+1. Create the ssg.security secret.
    ```
    kubectl apply -k helm-example
    ```

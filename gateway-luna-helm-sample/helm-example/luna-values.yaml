@@ -31,7 +31,3 @@ customConfig:
           key: ssg.security
           path: ssg.security
 
-# Enable Policy Manager admin access to enable the Luna keystore from Policy Manager > Manage Tasks > Manage Private Keys
-management:
-  service:
-    enabled: true
